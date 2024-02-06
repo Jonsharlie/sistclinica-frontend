@@ -1,0 +1,172 @@
+<div class="container">
+    <h2 mat-dialog-title>{{ operacion }} Trabajador</h2>
+    <mat-spinner *ngIf="loading" [diameter]="30"></mat-spinner>
+</div>
+<form [formGroup]="form" (ngSubmit)="addEditTrabajador()">
+    <mat-dialog-content>
+        <div class="row">
+            <div class="column">
+                <mat-form-field>
+                    <mat-label>Tipo de Documento</mat-label>
+                    <mat-select formControlName="id_tipo_documento">
+                        @for(tipo of tipodocs; track tipo) {
+                            <mat-option [value]="tipo.id">{{ tipo.nombre }}</mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+                <div class="error">
+                    <span *ngIf="form.get('id_tipo_documento')?.hasError('required') && form.get('id_tipo_documento')?.touched">El tipo de documento es un campo <strong>requerido</strong></span>
+                </div>
+            </div>
+            <div class="column">
+                <mat-form-field>
+                    <mat-label>Cargo</mat-label>
+                    <mat-select formControlName="id_cargo">
+                        @for(cargo of cargos; track cargo) {
+                            <mat-option [value]="cargo.id">{{ cargo.nombre }}</mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+                <div class="error">
+                    <span *ngIf="form.get('id_cargo')?.hasError('required') && form.get('id_cargo')?.touched">El cargo es un campo <strong>requerido</strong></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="column">
+                <mat-form-field appearance="fill">
+                    <mat-label>Número Documento</mat-label>
+                    <input formControlName="nro_documento" matInput placeholder="44961236" autocomplete="off">
+                </mat-form-field>
+                <div class="error">
+                    <span *ngIf="form.get('nro_documento')?.hasError('required') && form.get('nro_documento')?.touched">El número de documento es un campo <strong>requerido</strong></span>
+                    <span *ngIf="form.get('nro_documento')?.hasError('maxlength')">
+                        El número de documento debe tener como máximo <strong>12 caracteres</strong>
+                    </span>
+                </div>
+            </div>
+            <div class="column">
+                <mat-form-field appearance="fill">
+                    <mat-label>Número Colegiatura</mat-label>
+                    <input formControlName="numero_colegiatura" matInput placeholder="105263" autocomplete="off">
+                </mat-form-field>
+                <span *ngIf="form.get('numero_colegiatura')?.hasError('maxlength')">
+                    El número de Colegiatura debe tener como máximo <strong>8 caracteres</strong>
+                </span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="column">
+                <mat-form-field appearance="fill">
+                    <mat-label>Apellido Paterno</mat-label>
+                    <input formControlName="apellido_paterno" matInput placeholder="Pérez" autocomplete="off">
+                </mat-form-field>
+                <div class="error">
+                    <span *ngIf="form.get('apellido_paterno')?.hasError('required') && form.get('apellido_paterno')?.touched">El apellido paterno es un campo <strong>requerido</strong></span>
+                    <span *ngIf="form.get('apellido_paterno')?.hasError('maxlength')">
+                        El apellido paterno debe tener como máximo <strong>20 caracteres</strong>
+                    </span>
+                </div>
+            </div>
+            <div class="column">
+                <mat-form-field appearance="fill">
+                    <mat-label>Apellido Materno</mat-label>
+                    <input formControlName="apellido_materno" matInput placeholder="Pérez" autocomplete="off">
+                </mat-form-field>
+                <div class="error">
+                    <span *ngIf="form.get('apellido_materno')?.hasError('required') && form.get('apellido_materno')?.touched">El apellido materno es un campo <strong>requerido</strong></span>
+                    <span *ngIf="form.get('apellido_materno')?.hasError('maxlength')">
+                        El apellido materno debe tener como máximo <strong>20 caracteres</strong>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="column">
+                <mat-form-field appearance="fill">
+                    <mat-label>Nombres</mat-label>
+                    <input formControlName="nombres" matInput placeholder="Juan" autocomplete="off">
+                </mat-form-field>
+                <div class="error">
+                    <span *ngIf="form.get('nombres')?.hasError('required') && form.get('nombres')?.touched">El nombre es un campo <strong>requerido</strong></span>
+                    <span *ngIf="form.get('nombres')?.hasError('maxlength')">
+                        El nombre debe tener como máximo <strong>20 caracteres</strong>
+                    </span>
+                </div>
+            </div>
+            <div class="column">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Fecha Nacimiento</mat-label>
+                    <input [max]="maxDate" formControlName="fecha_nacimiento" matInput [matDatepicker]="picker">
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker touchUi #picker></mat-datepicker>
+                </mat-form-field>
+                <div class="error">
+                    <span *ngIf="form.get('fecha_nacimiento')?.hasError('required') && form.get('fecha_nacimiento')?.touched">La fecha de nacimiento es un campo <strong>requerido</strong></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="column">
+                <mat-form-field appearance="fill">
+                    <mat-label>Dirección</mat-label>
+                    <input formControlName="direccion" matInput placeholder="La Florida 512" autocomplete="off">
+                </mat-form-field>
+                <div class="error">
+                    <span *ngIf="form.get('direccion')?.hasError('maxlength')">
+                        La dirección debe tener como máximo <strong>50 caracteres</strong>
+                    </span>
+                </div>
+            </div>
+            <div class="column">
+                <mat-form-field appearance="fill">
+                    <mat-label>Email</mat-label>
+                    <input formControlName="email" matInput placeholder="juan.perez@gmai.com" autocomplete="off">
+                </mat-form-field>
+                <div class="error">
+                    <span *ngIf="form.get('email')?.hasError('email') && form.get('email')?.touched">
+                        El email es <strong>invalido</strong>
+                    </span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="column">
+                <mat-form-field appearance="fill">
+                    <mat-label>N° Teléfono</mat-label>
+                    <input formControlName="numero_telefono" matInput placeholder="998877665" autocomplete="off">
+                </mat-form-field>
+                <div class="error">
+                    <span *ngIf="form.get('numero_telefono')?.hasError('maxlength')">
+                        El número de teléfono debe tener como máximo <strong>12 caracteres</strong>
+                    </span>
+                </div>
+            </div>
+            <div class="column">
+                <mat-form-field>
+                    <mat-label>Sexo</mat-label>
+                    <mat-select formControlName="sexo">
+                        @for(sexo of sexos; track sexo) {
+                            <mat-option [value]="sexo.value">{{ sexo.viewValue }}</mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+                <div class="error">
+                    <span *ngIf="form.get('sexo')?.hasError('required') && form.get('sexo')?.touched">El sexo es un campo <strong>requerido</strong></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <mat-checkbox formControlName="estado">Activo</mat-checkbox>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button type="button" (click)="cancelar()" mat-button>Cancelar</button>
+        <button [disabled]="form.invalid" type="submit" mat-button cdkFocusInitial>Aceptar</button>
+    </mat-dialog-actions>
+</form>

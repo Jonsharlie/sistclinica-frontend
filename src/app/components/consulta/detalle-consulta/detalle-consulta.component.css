@@ -1,0 +1,74 @@
+/*
+.mat-mdc-card {
+    min-height: 130vh;
+}
+*/
+
+.formato-consulta {
+    min-height: 130vh;
+}
+
+.content-tab {
+    border-radius: 5px;
+    margin: 10px auto;
+    width: 96%;
+}
+
+.color-border {
+    border: 1px solid #673ab7;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.w100 {
+    width: 100%;
+}
+
+.mat-mdc-form-field {
+    width: 100%;
+}
+
+.row {
+    display: flex;
+}
+
+.column {
+    flex: 50%;
+    margin: 0px 5px;
+}
+
+.column-left {
+    flex: 40%;
+    margin: 0px 5px;
+}
+
+.column-right {
+    flex: 60%;
+    margin: 0px 5px;
+}
+
+.list {
+    list-style: none;
+    padding-left: 0px;
+}
+
+.list-item {
+    border-bottom: 1px solid #673ab7;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.mr-5 {
+    margin-right: 5px;
+}
+
+.mb-10 {
+    margin-bottom: 10px;
+}
+
+.p-5 {
+    padding: 5px;
+}

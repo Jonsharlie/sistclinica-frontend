@@ -1,0 +1,74 @@
+<div class="container">
+  <mat-toolbar>
+      <span>Listado de Trabajadores</span>
+      <div class="example-spacer"></div>
+      <button mat-raised-button color="primary" (click)="addEditTrabajador()">Agregar</button>
+  </mat-toolbar>
+  <div class="mat-elevation-z8">
+    <mat-form-field>
+      <mat-label>Filter</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Ingrese criterio de búsqueda" #input autocomplete="off">
+    </mat-form-field>
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+      <ng-container matColumnDef="apellido_paterno">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Apellido Paterno </th>
+        <td mat-cell *matCellDef="let row"> {{row.apellido_paterno}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="apellido_materno">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Apellido Materno </th>
+        <td mat-cell *matCellDef="let row"> {{row.apellido_materno}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="nombres">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombres </th>
+        <td mat-cell *matCellDef="let row"> {{row.nombres}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="abreviatura_tipodocumento">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Tipo Documento </th>
+        <td mat-cell *matCellDef="let row"> {{row.abreviatura_tipodocumento}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="nro_documento">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Número Documento </th>
+        <td mat-cell *matCellDef="let row"> {{row.nro_documento}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="nombre_cargo">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Cargo </th>
+        <td mat-cell *matCellDef="let row"> {{row.nombre_cargo}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="estado">
+        <th mat-header-cell *matHeaderCellDef> Estado </th>
+        <td mat-cell *matCellDef="let row">
+            <ng-template [ngIf]="row.estado">
+                <mat-icon matTooltip="Activo" class="iconActive">thumb_up</mat-icon>
+            </ng-template>
+            <ng-template [ngIf]="!row.estado">
+                <mat-icon matTooltip="Inactivo" class="iconInactive">thumb_down</mat-icon>
+            </ng-template>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="acciones">
+        <th mat-header-cell *matHeaderCellDef>Acciones</th>
+        <td mat-cell *matCellDef="let row">
+            <mat-icon (click)="addEditTrabajador(row.id)" class="btnEdit" matTooltip="Editar">edit</mat-icon>
+            <mat-icon (click)="confirmDialog(row.id)" class="btnDelete" matTooltip="Eliminar">delete</mat-icon>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="8">No se encontraron resultados "{{input.value}}"</td>
+      </tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>  
+  </div>
+</div>

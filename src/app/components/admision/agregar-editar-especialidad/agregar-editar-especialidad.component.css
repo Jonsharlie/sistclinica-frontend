@@ -1,0 +1,17 @@
+.mat-mdc-form-field {
+    width: 100%;
+}
+
+.row {
+    display: flex;
+}
+
+.column {
+    flex: 50%;
+    margin: 0px 5px;
+}
+
+.error {
+    color: #B0304B;
+    margin-top: -10px;
+}

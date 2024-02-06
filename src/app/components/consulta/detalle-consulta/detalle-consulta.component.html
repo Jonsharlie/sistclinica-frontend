@@ -1,0 +1,181 @@
+<mat-toolbar>
+    <span>Detalle de Consulta</span>
+</mat-toolbar>
+
+<mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
+    <mat-tab label="Información General">
+        <mat-card class="formato-consulta">
+            <div class="content-tab color-border p-5">
+                <div class="container">
+                    <div class="w100">
+                        <ul class="list">
+                            <li>
+                                <strong>Tipo de Paciente: </strong>
+                                <span>{{ consulta.nombre_tipopaciente }}</span>
+                            </li>
+                            <li>
+                                <strong>Número de Historia: </strong>
+                                <span>{{ consulta.nro_historia }}</span>
+                            </li>
+                            <li>
+                                <strong>Paciente: </strong>
+                                <span>{{ consulta.nombre_paciente }}</span>
+                            </li>
+                            <li>
+                                <strong>Fecha de Nacimiento: </strong>
+                                <span>{{ consulta.fecha_nacimiento | date:'dd/MM/yyyy' }} </span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="w100">
+                        <ul class="list">
+                            <li>
+                                <strong>Asignado a: </strong>
+                                <span>{{ consulta.doctor_consulta }}</span>
+                            </li>
+                            <li>
+                                <strong>Atendido por: </strong>
+                                <span>{{ consulta.doctor_atencion }}</span>
+                            </li>
+                            <li>
+                                <strong>Estado consulta: </strong>
+                                <span>{{ consulta.estado_consulta }}</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="w100">
+                        <ul class="list">
+                            <li>
+                                <strong>Tipo de Servicio: </strong>
+                                <span>{{ consulta.nombre_tiposervicio }}</span>
+                            </li>
+                            <li>
+                                <strong>Tipo de Atención: </strong>
+                                <span>{{ consulta.tipo_atencion }}</span>
+                            </li>
+                            <li>
+                                <strong>Fecha de reserva: </strong>
+                                <span>{{ consulta.fecha_registro | date:'dd/MM/yyyy' }}</span>
+                            </li>
+                            <li>
+                                <strong>Fecha de atención: </strong>
+                                <span>{{ consulta.fecha_atencion | date:'dd/MM/yyyy' }}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="content-tab">
+                <form [formGroup]="form" (ngSubmit)="addEditFormatoConsulta()">
+                    <div class="row">
+                        <div class="column">
+                            <mat-form-field>
+                                <mat-label>Enfermedad Actual: TE</mat-label>
+                                <textarea formControlName="enfermedad_actual" rows="4" matInput placeholder="Ingrese Enfermedad Actual" #newTextContent></textarea>
+                            </mat-form-field>
+                        </div>
+                        <div class="column">
+                            <mat-checkbox formControlName="hta">HTA</mat-checkbox>
+                            <mat-checkbox formControlName="dm">DM</mat-checkbox>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="column">
+                            <mat-form-field>
+                                <mat-label>Alergias a medicamentos</mat-label>
+                                <textarea formControlName="alergias_medicamentos" rows="3" matInput placeholder="Ingrese Alergias a medicamentos"></textarea>
+                            </mat-form-field>
+                        </div>
+                        <div class="column">
+                            <mat-form-field>
+                                <mat-label>Operaciones Anteriores</mat-label>
+                                <textarea formControlName="operaciones_anteriores" rows="3" matInput placeholder="Ingrese Operaciones Anteriores"></textarea>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="column">
+                            <mat-form-field>
+                                <mat-label>Examen Físico</mat-label>
+                                <textarea formControlName="examen_fisico" rows="3" matInput placeholder="Ingrese Examen Físico"></textarea>
+                            </mat-form-field>
+                        </div>
+                        <div class="column">
+                            <mat-form-field>
+                                <mat-label>Diagnósticos</mat-label>
+                                <textarea formControlName="diagnosticos" rows="3" matInput placeholder="Ingrese Diagnósticos"></textarea>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="column">
+                            <mat-form-field>
+                                <mat-label>Receta</mat-label>
+                                <textarea formControlName="receta" rows="3" matInput placeholder="Ingrese medicamentos"></textarea>
+                            </mat-form-field>
+                        </div>
+                        <div class="column">
+                            <mat-form-field>
+                                <mat-label>Exámenes</mat-label>
+                                <textarea formControlName="examenes" rows="3" matInput placeholder="Ingrese exámenes"></textarea>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <button type="submit" class="mr-5" [disabled]="isFinalizado" mat-raised-button color="primary">{{ nameButton }}</button>
+                        <ng-template [ngIf]="isFinalizado">
+                            <button type="button" class="mr-5" (click)="confirmDialog('activate')" mat-raised-button color="accent">Activar</button>
+                        </ng-template>
+                        <ng-template [ngIf]="!isFinalizado">
+                            <button type="button" class="mr-5" (click)="confirmDialog('deactivate')" mat-raised-button color="accent">Finalizar</button>
+                        </ng-template>
+                        <button type="button" class="mr-5" (click)="goToPage('consultas')" mat-raised-button color="warn">Volver</button>
+                    </div>
+                </form>
+            </div>
+        </mat-card>
+    </mat-tab>
+    <mat-tab label="Historial">
+        <mat-card>
+            <div class="content-tab">
+                <div>
+                    @for(item of historial; track item ) {
+                        <mat-card class="mb-10">
+                            <div class="row">
+                                <div class="column">
+                                    <ul class="list">
+                                        <li>
+                                            <strong>Paciente: </strong>{{ item.nombre_paciente }}
+                                        </li>
+                                        <li>
+                                            <strong>N° Historia: </strong>{{ item.nro_historia }}
+                                        </li>
+                                        <li>
+                                            <strong>Tipo de Servicio: </strong>{{ item.nombre_tiposervicio }}
+                                        </li>
+                                        <li>
+                                            <strong>Especialidad: </strong>{{ item.nombre_servicio }}
+                                        </li>
+                                        <li>
+                                            <strong>Tipo de Atención: </strong>{{ item.tipo_atencion }}
+                                        </li>
+                                        <li>
+                                            <strong>Doctor: </strong>{{ item.doctor_consulta }}
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="column">
+                                    <strong>Enfermedad actual</strong>
+                                    <div>{{ item.detalle_consultaformato | json }}</div>
+                                </div>
+                                <div class="column">
+
+                                </div>
+                            </div>
+                        </mat-card>
+                    }
+                </div>
+            </div>
+        </mat-card>
+    </mat-tab>
+</mat-tab-group>

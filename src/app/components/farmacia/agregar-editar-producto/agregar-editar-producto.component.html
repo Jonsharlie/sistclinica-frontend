@@ -1,0 +1,156 @@
+<div class="container">
+    <h2 mat-dialog-title>{{ operacion }} Producto</h2>
+    <mat-spinner *ngIf="loading" [diameter]="30"></mat-spinner>
+</div>
+<form [formGroup]="form" (ngSubmit)="addEditProducto()">
+    <mat-dialog-content>
+        <div class="row">
+            <div class="column">
+                <mat-form-field appearance="fill">
+                    <mat-label>Nombre</mat-label>
+                    <input formControlName="nombre" matInput placeholder="Paracetamol 50MG" autocomplete="off">
+                </mat-form-field>
+                <div class="error">
+                    <span *ngIf="form.get('nombre')?.hasError('required') && form.get('nombre')?.touched">El nombre es un campo <strong>requerido</strong></span>
+                    <span *ngIf="form.get('nombre')?.hasError('maxlength')">
+                        El nombre debe tener como máximo <strong>100 caracteres</strong>
+                    </span>
+                </div>
+            </div>
+            <!-- <div class="column">
+                <mat-form-field>
+                    <mat-label>Área</mat-label>
+                    <mat-select formControlName="id_area">
+                        @for(area of areas; track area) {
+                            <mat-option [value]="area.id">{{ area.nombre }}</mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+                <div class="error">
+                    <span *ngIf="form.get('id_area')?.hasError('required') && form.get('id_area')?.touched">El área es un campo <strong>requerido</strong></span>
+                </div>
+            </div> -->
+        </div>
+
+        <div class="row">
+            <div class="column">
+                <mat-form-field>
+                    <mat-label>Unidad Entera</mat-label>
+                    <mat-select formControlName="id_unidad">
+                        @for(unidad_entera of unidades; track unidad_entera) {
+                            <mat-option [value]="unidad_entera.id">{{ unidad_entera.nombre }}</mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+                <div class="error">
+                    <span *ngIf="form.get('id_unidad')?.hasError('required') && form.get('id_unidad')?.touched">La unidad entera es un campo <strong>requerido</strong></span>
+                </div>
+            </div>
+            <div class="column">
+                <mat-form-field>
+                    <mat-label>Unidad Fracción</mat-label>
+                    <mat-select formControlName="id_unidad_frac">
+                        @for(unidad_frac of unidades; track unidad_frac) {
+                            <mat-option [value]="unidad_frac.id">{{ unidad_frac.nombre }}</mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+                <div class="error">
+                    <span *ngIf="form.get('unidad_frac')?.hasError('required') && form.get('unidad_frac')?.touched">La unidad fracción es un campo <strong>requerido</strong></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- <div class="row">
+            <div class="column">
+                <mat-form-field appearance="fill">
+                    <mat-label>Precio de Costo</mat-label>
+                    <input formControlName="precio_costo" matInput placeholder="10.50" autocomplete="off">
+                </mat-form-field>
+                <div class="error">
+                    <span *ngIf="form.get('precio_costo')?.hasError('required') && form.get('precio_costo')?.touched">El precio de costo es un campo <strong>requerido</strong></span>
+                    <span *ngIf="form.get('precio_costo')?.hasError('pattern')">
+                        El precio de costo no es válido
+                    </span>
+                </div>
+            </div>
+            <div class="column">
+                <mat-form-field appearance="fill">
+                    <mat-label>Precio de Venta</mat-label>
+                    <input formControlName="precio_venta" matInput placeholder="16.20" autocomplete="off">
+                </mat-form-field>
+                <div class="error">
+                    <span *ngIf="form.get('precio_venta')?.hasError('pattern')">
+                        El precio de venta no es válido
+                    </span>
+                </div>
+            </div>
+        </div> -->
+
+        <div class="row">
+            <div class="column">
+                <mat-form-field appearance="fill">
+                    <mat-label>Código de Barras</mat-label>
+                    <input formControlName="codigo_gtin" matInput placeholder="105263" autocomplete="off">
+                </mat-form-field>
+                <div class="error">
+                    <span *ngIf="form.get('codigo_gtin')?.hasError('maxlength')">
+                        El código gtin debe tener como máximo <strong>17 caracteres</strong>
+                    </span>
+                </div>
+            </div>
+            <div class="column">
+                <mat-form-field appearance="fill">
+                    <mat-label>Capacidad</mat-label>
+                    <input formControlName="capacidad" matInput placeholder="1" autocomplete="off">
+                </mat-form-field>
+                <div class="error">
+                    <span *ngIf="form.get('capacidad')?.hasError('required') && form.get('capacidad')?.touched">La capacidad es un campo <strong>requerido</strong></span>
+                    <span *ngIf="form.get('capacidad')?.hasError('pattern')">
+                        La capacidad no es válida
+                    </span>
+                </div>
+            </div>
+            <!-- <div class="column">
+                <mat-form-field appearance="fill">
+                    <mat-label>Utilidad</mat-label>
+                    <input formControlName="utilidad" matInput placeholder="1" autocomplete="off">
+                </mat-form-field>
+                <div class="error">
+                    <span *ngIf="form.get('utilidad')?.hasError('required') && form.get('utilidad')?.touched">La utilidad es un campo <strong>requerido</strong></span>
+                    <span *ngIf="form.get('utilidad')?.hasError('pattern')">
+                        La utilidad no es válida
+                    </span>
+                </div>
+            </div> -->
+        </div>
+
+        <div class="row">
+            <!-- <mat-form-field appearance="fill">
+                <mat-label>Stock</mat-label>
+                <input formControlName="stock" matInput placeholder="1" autocomplete="off">
+            </mat-form-field>
+            <div class="error">
+                <span *ngIf="form.get('stock')?.hasError('required') && form.get('stock')?.touched">El stock es un campo <strong>requerido</strong></span>
+                <span *ngIf="form.get('stock')?.hasError('pattern')">
+                    El stock no es válido
+                </span>
+            </div> -->
+            <div class="column">
+                <mat-checkbox formControlName="igv">IGV</mat-checkbox>
+                <mat-checkbox formControlName="venta">Venta</mat-checkbox>
+                <mat-checkbox formControlName="insumo">Insumo</mat-checkbox>
+                <mat-checkbox formControlName="maneja_lote">Maneja Lote</mat-checkbox>
+            </div>
+        </div>
+
+        <div class="row">
+            <mat-checkbox formControlName="estado">Activo</mat-checkbox>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button type="button" (click)="cancelar()" mat-button>Cancelar</button>
+        <button type="submit" mat-button cdkFocusInitial>Aceptar</button>
+        <!-- <button type="submit" mat-button cdkFocusInitial>Aceptar</button> -->
+    </mat-dialog-actions>
+</form>

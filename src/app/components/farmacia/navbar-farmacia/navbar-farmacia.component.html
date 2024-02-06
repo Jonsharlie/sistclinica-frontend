@@ -1,0 +1,17 @@
+<mat-toolbar color="primary">
+    <span>Sistema Clinica | Farmacia</span>
+    <span class="example-spacer"></span>
+    <button mat-button routerLink="/farmacia/principio-activo">Principio Activo</button>
+    <button mat-button routerLink="/farmacia/unidades">Unidades</button>
+    <button mat-button routerLink="/farmacia/productos">Productos</button>
+    <button mat-button routerLink="/farmacia/proveedores">Proveedores</button>
+    <button mat-button routerLink="/farmacia/compras">Compras</button>
+    <button mat-button routerLink="/farmacia/ventas">Ventas</button>
+    <span class="example-spacer"></span>
+    <!-- <button routerLink="/logout" mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button width heart icon">
+        <mat-icon>logout</mat-icon>
+    </button> -->
+    <button (click)="logout()" mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button width heart icon">
+        <mat-icon>logout</mat-icon>
+    </button>
+</mat-toolbar>

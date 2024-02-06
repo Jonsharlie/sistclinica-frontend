@@ -1,0 +1,53 @@
+<mat-toolbar>
+    <span>Buscar Producto</span>
+</mat-toolbar>
+<mat-dialog-content>
+    <div class="row">
+        <mat-form-field>
+            <mat-label>Filtro</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Ingrese criterio de búsqueda" #input autocomplete="off">
+        </mat-form-field>
+    </div>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <ng-container matColumnDef="nombre">
+            <th mat-header-cell *matHeaderCellDef> Nombre </th>
+            <td mat-cell *matCellDef="let row"> {{row.nombre}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="nombre_unidadentero">
+            <th mat-header-cell *matHeaderCellDef> Unidad</th>
+            <td mat-cell *matCellDef="let row"> {{row.nombre_unidadentero}} </td>
+        </ng-container>
+        
+        <ng-container matColumnDef="nombre_unidadfrac">
+            <th mat-header-cell *matHeaderCellDef> Unidad Fracción </th>
+            <td mat-cell *matCellDef="let row"> {{row.nombre_unidadfrac}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="capacidad">
+            <th mat-header-cell *matHeaderCellDef> Capacidad </th>
+            <td mat-cell *matCellDef="let row"> {{row.capacidad}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="precio_costo">
+            <th mat-header-cell *matHeaderCellDef> Prec. Costo (S/.) </th>
+            <td mat-cell *matCellDef="let row"> {{row.precio_costo_fraccion}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="precio_venta">
+            <th mat-header-cell *matHeaderCellDef> Prec. Venta (S/.) </th>
+            <td mat-cell *matCellDef="let row"> {{row.precio_venta_fraccion}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="stock">
+            <th mat-header-cell *matHeaderCellDef> Stock </th>
+            <td mat-cell *matCellDef="let row"> {{row.stock}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="row-table" (click)="selectProduct(row)"></tr>
+    </table>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button type="buton" (click)="cancelar()" mat-button>Cancelar</button>
+</mat-dialog-actions>

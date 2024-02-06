@@ -1,0 +1,44 @@
+<div class="container">
+    <h2 mat-dialog-title>Agregar producto a nueva receta</h2>
+    <mat-spinner *ngIf="loading" class="spinner" [diameter]="30"></mat-spinner>
+</div>
+<form [formGroup]="form" (ngSubmit)="addProductoReceta()">
+    <mat-dialog-content>
+        <div class="row">
+            <div class="column">
+                <mat-form-field appearance="fill">
+                    <mat-label>Producto</mat-label>
+                    <input formControlName="nombre" [disabled]="isDisabled" matInput placeholder="Paracetamol 25MG" autocomplete="off">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="column">
+                <mat-form-field appearance="fill">
+                    <mat-label>Stock</mat-label>
+                    <input formControlName="stock" [disabled]="isDisabled" matInput placeholder="100" autocomplete="off">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="column">
+                <mat-form-field appearance="fill">
+                    <mat-label>Cantidad</mat-label>
+                    <input formControlName="cantidad" matInput placeholder="10" autocomplete="off">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="column">
+                <mat-form-field appearance="fill">
+                    <mat-label>Indicaciones</mat-label>
+                    <textarea formControlName="indicaciones" rows="4" matInput placeholder="Ingrese indicaciones" #newTextContent></textarea>
+                </mat-form-field>
+            </div>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button type="button" (click)="cancelar()" mat-button>Cancelar</button>
+        <button type="submit" mat-button>Aceptar</button>
+    </mat-dialog-actions>
+</form>

@@ -1,0 +1,33 @@
+table {
+    width: 100%;
+}
+
+.mat-mdc-form-field {
+    font-size: 14px;
+    margin-right: 10px;
+    width: 90%;
+}
+
+.btnEdit, .btnDelete, .btnDetail {
+    cursor: pointer;
+}
+
+.btnEdit {
+    color: #376DCD;
+}
+
+.btnDelete {
+    color: #B0304B;
+}
+
+.btnDetail {
+    color: #1181cc;
+}
+
+.iconActive {
+    color: #04611c;
+}
+
+.iconInactive {
+    color: #B0304B;
+}

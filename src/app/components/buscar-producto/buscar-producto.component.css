@@ -1,0 +1,50 @@
+.mat-mdc-form-field {
+    width: 100%;
+}
+
+tr.row-table:not(.example-expanded-row):hover {
+    background: whitesmoke;
+}
+
+tr.row-table:not(.example-expanded-row):active {
+    background: #efefef;
+}
+
+.row-table td {
+    border-bottom-width: 0;
+}
+
+.mat-mdc-row .mat-mdc-cell {
+    border-bottom: 1px solid transparent;
+    border-top: 1px solid transparent;
+    cursor: pointer;
+}
+  
+.mat-mdc-row:hover .mat-mdc-cell {
+    border-color: currentColor;
+}
+
+/*
+.mat-mdc-table {
+    width: 100%;
+    max-height: 500px;
+    overflow: auto;
+}
+  
+.mat-column-name {
+    height: 100px;
+}
+
+.row {
+    display: flex;
+}
+
+.column {
+    flex: 50%;
+    margin: 0px 5px;
+}
+
+tr.row-table {
+    height: 0;
+}
+*/

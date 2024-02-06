@@ -1,0 +1,382 @@
+<div class="container">
+    <mat-toolbar>
+        <span>{{ operacion }} Compra</span>
+    </mat-toolbar>
+    <div class="mat-elevation-z8">
+        <div class="container-form">
+            <form [formGroup]="form">
+                <div class="p-10">
+                    <mat-form-field class="mr-2">
+                        <mat-label>Fecha de registro</mat-label>
+                        <input [min]="minDate" formControlName="fecha_emision" matInput [matDatepicker]="picker">
+                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker touchUi #picker></mat-datepicker>
+                    </mat-form-field>
+                    <mat-form-field class="mr-2">
+                        <mat-label>Comprobante</mat-label>
+                        <mat-select formControlName="id_tipo_documento">
+                            @for(tipo of tipodocs; track tipo) {
+                                <mat-option [value]="tipo.id">{{ tipo.nombre }}</mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field class="mr-2">
+                        <mat-label>Proveedor</mat-label>
+                        <mat-select formControlName="id_proveedor">
+                            @for(proveedor of proveedores; track proveedor) {
+                                <mat-option [value]="proveedor.id">{{ proveedor.nombre }}</mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field class="mr-2">
+                        <mat-label>N° Serie</mat-label>
+                        <input formControlName="serie" matInput placeholder="5202" maxlength="4" autocomplete="off"/>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>N° Correlativo</mat-label>
+                        <input formControlName="correlativo" matInput placeholder="002361" maxlength="7" autocomplete="off">
+                    </mat-form-field>
+                </div>
+                <!--
+                <div class="row p-10">
+                    <div class="column">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Fecha de registro</mat-label>
+                            <input [min]="minDate" formControlName="fecha_emision" matInput [matDatepicker]="picker">
+                            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker touchUi #picker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                    <div class="column">
+                        <mat-form-field>
+                            <mat-label>Comprobante</mat-label>
+                            <mat-select formControlName="id_tipo_documento">
+                                @for(tipo of tipodocs; track tipo) {
+                                    <mat-option [value]="tipo.id">{{ tipo.nombre }}</mat-option>
+                                }
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="column">
+                        <mat-form-field>
+                            <mat-label>Proveedor</mat-label>
+                            <mat-select formControlName="id_proveedor">
+                                @for(proveedor of proveedores; track proveedor) {
+                                    <mat-option [value]="proveedor.id">{{ proveedor.nombre }}</mat-option>
+                                }
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="column">
+                        <mat-form-field appearance="fill">
+                            <mat-label>N° Serie</mat-label>
+                            <input formControlName="serie" matInput placeholder="5202" maxlength="4" autocomplete="off"/>
+                        </mat-form-field>
+                    </div>
+                    <div class="column">
+                        <mat-form-field appearance="fill">
+                            <mat-label>N° Correlativo</mat-label>
+                            <input formControlName="correlativo" matInput placeholder="002361" maxlength="7" autocomplete="off">
+                        </mat-form-field>
+                    </div>
+                </div>
+                -->
+                <mat-divider></mat-divider>
+                <ng-container formGroupName="producto">
+                    <div class="row">
+                        <div class="column-10 mr-5">
+                            <button type="button" class="w-100" mat-raised-button color="primary" (click)="modalSearchProducto()" mat-button [disabled]="isDisabled">Buscar</button>
+                        </div>
+                        <div class="column-20 mr-5">
+                            <mat-form-field class="w-100">
+                                <mat-label>Nombre</mat-label>
+                                <input formControlName="nombre" matInput placeholder="Ingrese Historia Física" autocomplete="off">
+                            </mat-form-field>
+                        </div>
+                        <div class="column-10 mr-5">
+                            <mat-form-field class="w-100">
+                                <mat-label>Unidades</mat-label>
+                                <mat-select formControlName="id_unidad" (ngModelChange)="onUnidadSelected($event)">
+                                    @for(unidad of unidades; track unidad) {
+                                        <mat-option [value]="unidad.id">{{ unidad.nombre }}</mat-option>
+                                    }
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="column-10 mr-5">
+                            <mat-form-field class="w-100">
+                                <mat-label>Stock</mat-label>
+                                <input formControlName="stock" matInput placeholder="Ingrese Historia Física" autocomplete="off">
+                            </mat-form-field>
+                        </div>
+                        <div class="column-10 mr-5">
+                            <mat-form-field class="w-100">
+                                <mat-label>P. Compra</mat-label>
+                                <input formControlName="precio_compra" matInput placeholder="12.50" autocomplete="off">
+                            </mat-form-field>
+                        </div>
+                        <div class="column-10 mr-5">
+                            <mat-form-field class="w-100">
+                                <mat-label>P. Venta</mat-label>
+                                <input formControlName="precio_venta" matInput placeholder="12.50" autocomplete="off">
+                            </mat-form-field>
+                        </div>
+                        <div class="column-10 mr-5">
+                            <mat-form-field class="w-100">
+                                <mat-label>Cantidad</mat-label>
+                                <input formControlName="cantidad" matInput placeholder="30" autocomplete="off">
+                            </mat-form-field>
+                        </div>
+                        <div class="column-15">
+                            <button type="button" (click)="addProduct()" mat-raised-button color="primary mr-5" [disabled]="isDisabled">+</button>
+                            <button type="button" (click)="removeProduct()" mat-raised-button color="primary" [disabled]="isDisabled">-</button>
+                        </div>
+                    </div>
+                </ng-container>
+                <mat-divider></mat-divider>
+                <!-- <div class="row">
+                    <ng-container formGroupName="producto">
+                        <div class="column-10 mr-5">
+                            <button type="button" class="w-100" mat-raised-button color="primary" (click)="modalSearchProducto()" mat-button [disabled]="isDisabled">Buscar</button>
+                        </div>
+                        <div class="column-30 mr-5">
+                            <mat-form-field appearance="fill">
+                                <mat-label>Nombre</mat-label>
+                                <input formControlName="nombre" matInput placeholder="Ingrese Historia Física" autocomplete="off">
+                            </mat-form-field>
+                        </div>
+                        <div class="column-10 mr-5">
+                            <mat-form-field appearance="fill">
+                                <mat-label>Unidad</mat-label>
+                                <input formControlName="nombre_unidadentero" matInput placeholder="Crema" autocomplete="off">
+                            </mat-form-field>
+                        </div>
+                        <div class="column-10 mr-5">
+                            <mat-form-field appearance="fill">
+                                <mat-label>Stock</mat-label>
+                                <input formControlName="stock" matInput placeholder="Ingrese Historia Física" autocomplete="off">
+                            </mat-form-field>
+                        </div>
+                        <div class="column-10 mr-5">
+                            <mat-form-field appearance="fill">
+                                <mat-label>P. Compra</mat-label>
+                                <input formControlName="precio" matInput placeholder="12.50" autocomplete="off">
+                            </mat-form-field>
+                        </div>
+                        <div class="column-10 mr-5">
+                            <mat-form-field appearance="fill">
+                                <mat-label>Cantidad</mat-label>
+                                <input formControlName="cantidad" matInput placeholder="30" autocomplete="off">
+                            </mat-form-field>
+                        </div>
+                        <div class="column-15">
+                            <button type="button" (click)="addProduct()" mat-raised-button color="primary mr-5" [disabled]="isDisabled">+</button>
+                            <button type="button" (click)="removeProduct()" mat-raised-button color="primary" [disabled]="isDisabled">-</button>
+                        </div>
+                    </ng-container>
+                </div>
+                <mat-divider></mat-divider> -->
+                <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+                    <ng-container matColumnDef="nombre_producto">
+                        <th mat-header-cell *matHeaderCellDef> Nombre </th>
+                        <td mat-cell *matCellDef="let row"> {{row.nombre_producto}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="unidad">
+                        <th mat-header-cell *matHeaderCellDef> Unidad </th>
+                        <td mat-cell *matCellDef="let row"> {{row.unidad}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="precio_final">
+                        <th mat-header-cell *matHeaderCellDef> Precio (S/.) </th>
+                        <td mat-cell *matCellDef="let row"> {{row.precio_final}} </td>
+                    </ng-container>
+        
+                    <ng-container matColumnDef="cantidad">
+                        <th mat-header-cell *matHeaderCellDef> Cantidad </th>
+                        <td mat-cell *matCellDef="let row"> {{row.cantidad}} </td>
+                    </ng-container>
+        
+                    <ng-container matColumnDef="total">
+                        <th mat-header-cell *matHeaderCellDef> Importe (S/.) </th>
+                        <td mat-cell *matCellDef="let row"> {{row.total}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="acciones">
+                        <th mat-header-cell *matHeaderCellDef>Acciones</th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-icon (click)="removeItemCompra(element.id)" class="btnDelete" matTooltip="Eliminar">delete</mat-icon>
+                        </td>
+                    </ng-container>
+        
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                
+                    <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" colspan="6">No se agregaron productos</td>
+                    </tr>
+                </table>
+                <div class="content-prices mat-elevation-z8">
+                    <div class="row">
+                        <div class="column">
+                            <strong>Subtotal</strong>: S/.{{ tSubtotal }}
+                        </div>
+                        <div class="column">
+                            <strong>IGV</strong>: S/.{{ tIgv}}
+                        </div>
+                        <div class="column">
+                            <strong>Total</strong>: S/.{{ tTotal }}
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <button mat-raised-button (click)="confirmDialog()" [disabled]="isDisabled">Guardar</button>
+                    <button mat-raised-button (click)="cancel()" [disabled]="isDisabled">Cancelar</button>
+                    <button mat-raised-button (click)="goToPage('/farmacia/compras')">Volver</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--
+<div class="w-90">
+    <div class="container">
+        <h2 mat-dialog-title>{{ operacion }} Compra</h2>
+    </div>
+    <div class="container">
+        <form [formGroup]="form">
+            <div class="row">
+                <div class="column">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Fecha de registro</mat-label>
+                        <input [min]="minDate" formControlName="fecha_emision" matInput [matDatepicker]="picker">
+                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker touchUi #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="column">
+                    <mat-form-field>
+                        <mat-label>Comprobante</mat-label>
+                        <mat-select formControlName="id_tipo_documento">
+                            @for(tipo of tipodocs; track tipo) {
+                                <mat-option [value]="tipo.id">{{ tipo.nombre }}</mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="column">
+                    <mat-form-field>
+                        <mat-label>Proveedor</mat-label>
+                        <mat-select formControlName="id_proveedor">
+                            @for(proveedor of proveedores; track proveedor) {
+                                <mat-option [value]="proveedor.id">{{ proveedor.nombre }}</mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="column">
+                    <mat-form-field appearance="fill">
+                        <mat-label>N° Serie</mat-label>
+                        <input formControlName="serie" matInput placeholder="5202" maxlength="4" autocomplete="off"/>
+                    </mat-form-field>
+                </div>
+                <div class="column">
+                    <mat-form-field appearance="fill">
+                        <mat-label>N° Correlativo</mat-label>
+                        <input formControlName="correlativo" matInput placeholder="002361" maxlength="7" autocomplete="off">
+                    </mat-form-field>
+                </div>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="row">
+                <ng-container formGroupName="producto">
+                    <div class="column-10 mr-5">
+                        <button type="button" class="w-100" mat-raised-button color="primary" (click)="modalSearchProducto()" mat-button [disabled]="isDisabled">Buscar</button>
+                    </div>
+                    <div class="column-30 mr-5">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Nombre</mat-label>
+                            <input formControlName="nombre" matInput placeholder="Ingrese Historia Física" autocomplete="off">
+                        </mat-form-field>
+                    </div>
+                    <div class="column-10 mr-5">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Unidad</mat-label>
+                            <input formControlName="nombre_unidadentero" matInput placeholder="Crema" autocomplete="off">
+                        </mat-form-field>
+                    </div>
+                    <div class="column-10 mr-5">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Stock</mat-label>
+                            <input formControlName="stock" matInput placeholder="Ingrese Historia Física" autocomplete="off">
+                        </mat-form-field>
+                    </div>
+                    <div class="column-10 mr-5">
+                        <mat-form-field appearance="fill">
+                            <mat-label>P. Compra</mat-label>
+                            <input formControlName="precio" matInput placeholder="12.50" autocomplete="off">
+                        </mat-form-field>
+                    </div>
+                    <div class="column-10 mr-5">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Cantidad</mat-label>
+                            <input formControlName="cantidad" matInput placeholder="30" autocomplete="off">
+                        </mat-form-field>
+                    </div>
+                    <div class="column-15">
+                        <button type="button" (click)="addProduct()" mat-raised-button color="primary mr-5" [disabled]="isDisabled">+</button>
+                        <button type="button" (click)="removeProduct()" mat-raised-button color="primary" [disabled]="isDisabled">-</button>
+                    </div>
+                </ng-container>
+            </div>
+            <mat-divider></mat-divider>
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+                <ng-container matColumnDef="nombre_producto">
+                    <th mat-header-cell *matHeaderCellDef> Nombre </th>
+                    <td mat-cell *matCellDef="let row"> {{row.nombre_producto}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="precio_final">
+                    <th mat-header-cell *matHeaderCellDef> Precio (S/.) </th>
+                    <td mat-cell *matCellDef="let row"> {{row.precio_final}} </td>
+                </ng-container>
+    
+                <ng-container matColumnDef="cantidad">
+                    <th mat-header-cell *matHeaderCellDef> Cantidad </th>
+                    <td mat-cell *matCellDef="let row"> {{row.cantidad}} </td>
+                </ng-container>
+    
+                <ng-container matColumnDef="total">
+                    <th mat-header-cell *matHeaderCellDef> Importe (S/.) </th>
+                    <td mat-cell *matCellDef="let row"> {{row.total}} </td>
+                </ng-container>
+    
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="4">No se agregaron productos</td>
+                </tr>
+            </table>
+            <div class="content-prices mat-elevation-z8">
+                <div class="row">
+                    <div class="column">
+                        <strong>Subtotal</strong>: S/.{{ tSubtotal }}
+                    </div>
+                    <div class="column">
+                        <strong>IGV</strong>: S/.{{ tIgv}}
+                    </div>
+                    <div class="column">
+                        <strong>Total</strong>: S/.{{ tTotal }}
+                    </div>
+                </div>
+            </div>
+            <div>
+                <button mat-raised-button (click)="confirmDialog()" [disabled]="isDisabled">Guardar</button>
+                <button mat-raised-button (click)="cancel()" [disabled]="isDisabled">Cancelar</button>
+                <button mat-raised-button (click)="goToPage('/compras')">Volver</button>
+            </div>
+        </form>
+    </div>
+</div>
+-->
